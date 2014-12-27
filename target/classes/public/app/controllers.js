@@ -52,6 +52,8 @@ app.controller('MainController', function($scope, $location,
 								self : true
 							});
 						});
+			}else{
+		        alertService.add('warning', 'Empty String', 'Fill some thing ');
 			}
 		} else {
 			$modal.open($scope.popattr).result.then(function(secret) {

@@ -18,6 +18,7 @@ import com.geoc.app.util.CryptoUtil;
 public class UserService {
 	@Autowired
 	UserRepository repo;
+	
 	private final static String GRAVATAR = "http://www.gravatar.com/avatar/";
 
 	public void saveUser(ConnectedUser user) {
@@ -25,6 +26,7 @@ public class UserService {
 	}
 
 	public GeoResults<ConnectedUser> getUsersNearBy(ConnectedUser user) {
+		
 		return repo.findByTaglineNotNull(user.getLocation(), new Distance(1,
 				Metrics.KILOMETERS));
 	}
@@ -68,7 +70,7 @@ public class UserService {
 
 	public boolean isAllowed(String email, String secret) {
 		ConnectedUser existing = repo.findOne(CryptoUtil.mask(email));
-		if (existing == null)
+		if (existing == null || existing.getCode()==null)
 			return false;
 		else if (existing.getCode().equalsIgnoreCase(secret))
 			return true;
