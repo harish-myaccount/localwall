@@ -1,0 +1,79 @@
+
+<div ng-hide="true">
+	<p>{{ position | json }}</p>
+</div>
+<div>
+	<p>{{ message }}</p>
+</div>
+
+
+<div ng-if="position" class="wrapper">
+	<form ng-show="users" ng-submit="postQuestion()">
+		<div class="input-group input-group-lg"
+			style="margin: auto; width: 75%">
+			<input type="text" class=' form-control' ng-model='self.tagline'
+				placeholder='a security question'></input>
+			<!-- type="submit"-->
+			<button type="submit">Start a Chat</button>
+			&nbsp;
+			<button type="button" ng-click="reset()" style="margin-top: 0.7em;">Reset
+				Email</button>
+		</div>
+	</form>
+	<form ng-submit="start()" ng-hide="users">
+		<div class="input-group input-group-lg"
+			style="margin: auto; margin-bottom: 1em; margin-top: 10em; width: 35%;">
+			<span class="input-group-addon">email</span> <input width='150px'
+				type="email" class=' form-control' ng-model='self.email' required
+				placeholder='email'></input>
+		</div>
+		<button class='start' style="margin-top: 2em;">Start</button>
+	</form>
+</div>
+<p ng-if='users.length>0' class="text-center" style="margin-top: 8em;">Nearby
+	Users</p>
+<p ng-if='users.length==0' class="text-center" style="margin-top: 8em;">
+	You are the first user in this locality. <br />Add a security question
+	according to your interest. <br />For eg: Who is your favourite tennis
+	star? <br />&nbsp;&nbsp;Did you watch interstellar movie? <br />&nbsp;There
+	is buy one get one offer.I need only one.Can we share Bill? <br />If
+	some one of similar interest responds.We will let yout know
+</p>
+<div class="alerts">
+<div ng-repeat="alert in alerts" class="alert alert-{{alert.type}} animation">
+        <button type="button" class="close" ng-click="alert.close()" aria-hidden="true">×</button>
+
+<h4>{{ alert.title }}</h4>
+        {{ alert.msg }}
+    
+</div>
+</div>
+<div style="margin-left: 175px;">
+	<div class="thumbnail" ng-repeat="user in users"
+		style="width: 500px; display: table">
+		<h3>{{user.content.tagline}}</h3>
+		<div style="width: 400px">
+			<img class='' ng-src="{{ user.content.image }}"
+				style="width: 200px; padding: 5px; float: left;">
+			<button style="float: right;" ng-if="user.content.email==self.email"
+				ng-click="inbox()">Go to Inbox</button>
+			<button style="float: right;" ng-if="user.content.email!=self.email"
+				ng-click="outbox(user.content)">Respond</button>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="/popup.htm">  
+     <div class="modal-header">
+        <h4 class="modal-title">Enter secret code :</h4>
+     </div>
+     <div class="modal-body">
+      <div >{{email}}
+         <input type=text ng-model="secret"/>
+      </div>
+     </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+</script>

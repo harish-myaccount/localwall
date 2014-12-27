@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<link
+	href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700"
+	rel="stylesheet" type="text/css" />
+<!-- injector:css -->
+<link rel="stylesheet" href="js/lib/bootstrap-css-only/css/bootstrap.css">
+<link rel="stylesheet" href="assets/style.css">
+<!-- endinjector -->
+</head>
+<body ng-app="chatApp">
+<div ng-view> </div>
+	
+	<!-- injector:js -->
+	<script src="js/lib/sockjs/sockjs.js"></script>
+	<script src="js/lib/stomp-websocket/lib/stomp.min.js"></script>
+	<script src="js/lib/angular/angular.js"></script>
+	<script src="js/lib/angular-route/angular-route.js"></script>
+	<script src="js/lib/lodash/dist/lodash.compat.js"></script>
+	<script src="js/lib/angular-local-storage/dist/angular-local-storage.js"></script>
+	<script src="js/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="app/app.js"></script>
+	<script src="app/controllers.js"></script>
+	<script src="app/services.js"></script>
+	<!-- endinjector -->
+	
+</body>
+</html>
