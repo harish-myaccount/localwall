@@ -2,10 +2,38 @@ app = angular.module('chatApp.controllers', []);
 
 app.controller('MessageController',function($scope, $location,AuthService,UserService){
 	if(!AuthService.getAuth())
-		$location.path("/")
+		$location.path("/");
 	selected = UserService.getOutboxSelected();
-	
+
+	$scope.items = [
+	                    {
+	                        name: "inbox",
+	                        desc: "Inbox",
+	                        subitems: [
+	                            ]
+	                    },
+	                    {
+	                        name: "outbox",
+	                        desc: "Outbox",
+	                        subitems: [
+	                            ]
+	                    }
+	                ];
+
+	$scope.default = $scope.items[0];
+
 });
+
+
+app.controller('ItemController', ['$scope', function (scope) {
+
+                scope.$parent.isopen = (scope.$parent.default === scope.item);
+
+                scope.$watch('isopen', function (newvalue, oldvalue, scope) {
+                    scope.$parent.isopen = newvalue;
+                });
+
+            }]);
 
 app.controller('MainController', function($scope, $location,
 		GeolocationService, UserService, localStorageService, $window, $filter,alertService,
