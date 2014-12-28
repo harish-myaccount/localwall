@@ -1,5 +1,12 @@
 app = angular.module('chatApp.controllers', []);
 
+app.controller('MessageController',function($scope, $location,AuthService,UserService){
+	if(!AuthService.getAuth())
+		$location.path("/")
+	selected = UserService.getOutboxSelected();
+	
+});
+
 app.controller('MainController', function($scope, $location,
 		GeolocationService, UserService, localStorageService, $window, $filter,alertService,
 		AuthService, $modal) {
@@ -78,7 +85,7 @@ $scope.popattr={
 
 	$scope.inbox = function() {
 		if ($scope.authenticated)
-			$location.path("/chat");
+			$location.path("/messages");
 		else {
 			$modal.open($scope.popattr).result.then(function(secret) {
 				AuthService.authenticate($scope.self.email,secret).then(function(allowed){
@@ -91,11 +98,11 @@ $scope.popattr={
 				})
 			});
 		}
-
 	}
 
-	$scope.outbox = function() {
-
+	$scope.outbox = function(user) {
+		UserService.setOutboxSelected(user.email);
+		$location.path("/messages");
 	}
 });
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance,email) {

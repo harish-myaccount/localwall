@@ -1,5 +1,8 @@
 package com.geoc.app.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
@@ -10,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
-import com.geoc.app.model.ChatRequest;
 import com.geoc.app.model.ConnectedUser;
 import com.geoc.app.service.MailDispatcher;
 import com.geoc.app.service.UserService;
@@ -36,7 +40,7 @@ public class UserController {
 	@RequestMapping(value="/nearby",method = RequestMethod.POST )
 	@ResponseBody
 	public GeoResults<ConnectedUser> getUsers(@RequestBody ConnectedUser user){
-		
+		final String email = user.getEmail();
 		String emailc = CryptoUtil.mask(user.getEmail());
 		ConnectedUser existing = usrsevice.getUser(emailc);
 		if(existing==null){
@@ -45,11 +49,14 @@ public class UserController {
 		}
 		if(existing.getCode()==null){
 			final String code = CryptoUtil.nextString();
-			final String to = user.getEmail();
 			new Thread(new Runnable() {
 				
 				public void run() {
-					mailService.sendMail("LocalWall", to, "Secret Code", "Your secret code is "+ code);					
+					try {
+						mailService.sendMail( email, "Your secret code is "+ code + ".You can change it here http://"+InetAddress.getLocalHost().getHostName()+":8080/users/changecode?e="+email+"&p="+code);
+					} catch (UnknownHostException e) {
+					
+					}					
 				}
 			}).start();
 			existing.setCode(code);
@@ -76,4 +83,24 @@ public class UserController {
 	public boolean authenticateUser(@RequestBody ConnectedUser user){
 		return usrsevice.isAllowed(user.getEmail(), user.getCode());
 	}
+	
+	@RequestMapping(value="/changecode",method =RequestMethod.GET)
+	@ResponseBody
+	public String changePassword (@RequestParam(value="e") String email,@RequestParam(value="p") String pass){
+		if(usrsevice.isAllowed(email, pass))
+		return "<form method='post'><input type='text' name='newpassword'/><button type='submit'>Set Password</button></form>";
+	return "This link is dead";
+	}
+	
+	@RequestMapping(value="/changecode",method =RequestMethod.POST)
+	public ModelAndView setCode(@RequestParam(value="e") String email,@RequestParam(value="p") String pass,@RequestParam(value="newpassword") String newcode ){
+		if(usrsevice.isAllowed(email, pass)){
+			ConnectedUser existing = usrsevice.getUser(CryptoUtil.mask(email));
+			existing.setCode(newcode);
+			usrsevice.saveUser(existing);
+		}
+			return new ModelAndView(new RedirectView("/", true));
+	
+	}
+	
 }

@@ -8,6 +8,7 @@ com\geoc\app\model\ChatRequest.class
 com\geoc\app\controller\UserController.class
 com\geoc\app\MailConfig.class
 com\geoc\app\service\UserService.class
+com\geoc\app\controller\UserController$1.class
 com\geoc\app\service\GreetingService.class
 com\geoc\app\model\Greeting.class
 com\geoc\app\repository\GreetingRepository.class

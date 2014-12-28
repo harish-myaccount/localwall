@@ -11,13 +11,13 @@ public class MailDispatcher {
 	@Autowired
 	private MailSender mailSender;
 	
-	public void sendMail(String from, String to, String subject, String msg) {
+	@Autowired
+	private SimpleMailMessage preConfiguredMail;
+	
+	public void sendMail( String to, String msg) {
 		 
-		SimpleMailMessage message = new SimpleMailMessage();
- 
-		message.setFrom(from);
+		SimpleMailMessage message = new SimpleMailMessage(preConfiguredMail);
 		message.setTo(to);
-		message.setSubject(subject);
 		message.setText(msg);
 		mailSender.send(message);	
 	}

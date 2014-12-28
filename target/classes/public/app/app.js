@@ -5,6 +5,9 @@
 	      when('/', {
 	        templateUrl: 'templates/main.htm',
 	        controller: 'MainController'
+	    }).when('/messages', {
+	        templateUrl: 'templates/chat.htm',
+	        controller: 'MessageController'
 	    }).
 	      otherwise({
 	        redirectTo: '/'

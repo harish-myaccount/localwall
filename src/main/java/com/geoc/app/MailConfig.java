@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -32,6 +33,14 @@ public class MailConfig {
 		defaults.setProperty("mail.smtp.starttls.enable", "true");
 		mailsender.setJavaMailProperties(defaults);
 		return mailsender;
+	}
+	
+	@Bean 
+	public SimpleMailMessage preConfiguredMail(){
+		SimpleMailMessage pre = new SimpleMailMessage();
+		pre.setFrom(username);
+		pre.setSubject("LocalWall Secret Code");
+		return pre;
 	}
 }
 

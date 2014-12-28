@@ -27,6 +27,17 @@ app.factory("GeolocationService", function($q, $window, $rootScope) {
 });
 
 app.service("UserService", function($q, $http) {
+	
+	var outboxSelected;
+	var inboxSelected;
+	
+	this.setOutboxSelected=function(email){
+		outboxSelected = email;
+	}
+	
+	this.getOutboxSelected=function(){
+		outboxSelected;
+	}
 
 	this.sendLocation = function(position, email) {
 		var deferred = $q.defer();
