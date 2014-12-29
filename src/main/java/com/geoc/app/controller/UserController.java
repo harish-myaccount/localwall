@@ -2,11 +2,17 @@ package com.geoc.app.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,6 +80,7 @@ public class UserController {
 
 	@RequestMapping(value="/question/add",method = RequestMethod.POST )
 	@ResponseBody
+	@Secured("ROLE_USER")
 	public ConnectedUser updateUser(@RequestBody ConnectedUser user){
 		return usrsevice.addQuestion(user);
 	}
@@ -81,7 +88,14 @@ public class UserController {
 	@RequestMapping(value="/authenticate",method = RequestMethod.POST )
 	@ResponseBody
 	public boolean authenticateUser(@RequestBody ConnectedUser user){
-		return usrsevice.isAllowed(user.getEmail(), user.getCode());
+		 if(usrsevice.isAllowed(user.getEmail(), user.getCode())){
+			 ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			 authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(),"token",authorities );
+			 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			 return true;
+		 }
+		 return false;
 	}
 	
 	@RequestMapping(value="/changecode",method =RequestMethod.GET)

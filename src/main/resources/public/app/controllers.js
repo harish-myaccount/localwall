@@ -1,26 +1,55 @@
 app = angular.module('chatApp.controllers', []);
 
-app.controller('MessageController',function($scope, $location,AuthService,UserService){
-	if(!AuthService.getAuth())
-		$location.path("/");
-	selected = UserService.getOutboxSelected();
+app.controller('OutboxController',function($scope,UserService,MessageService){
+	selectedOutboxUser = UserService.getOutboxSelected();
 
 	$scope.items = [
 	                    {
-	                        name: "inbox",
-	                        desc: "Inbox",
-	                        subitems: [
-	                            ]
+	                        desc: "Some topic"
 	                    },
 	                    {
-	                        name: "outbox",
-	                        desc: "Outbox",
-	                        subitems: [
+	                        desc: "Some other topic",
+	                        messages: [
+	                                   {
+	                                	  text:"this is sent",
+	                                	  time:"12:00:00"	  
+	                                   }
+	                            ]
+	                    }
+	                ];
+	
+});
+
+
+app.controller('InboxController',function($scope, $location,AuthService,UserService,MessageService){
+	if(!AuthService.getAuth()){
+		$location.path("/");
+		return;
+	}
+	
+
+	$scope.items = [
+	                    {
+	                        desc: "Some topic"
+	                    },
+	                    {
+	                        desc: "Some other topic",
+	                        messages: [
+	                                   {
+	                                	  text:"this is sent",
+	                                	  time:"12:00:00"	  
+	                                   }
 	                            ]
 	                    }
 	                ];
 
 	$scope.default = $scope.items[0];
+	
+	MessageService.getInbox(AuthService.getEmail()).then(function(data){
+		angular.forEach(data,function(value,key){
+			$scope.items[0].subitems.push({desc:key})
+		});
+	});
 
 });
 
@@ -32,6 +61,8 @@ app.controller('ItemController', ['$scope', function (scope) {
                 scope.$watch('isopen', function (newvalue, oldvalue, scope) {
                     scope.$parent.isopen = newvalue;
                 });
+                
+                
 
             }]);
 
@@ -113,7 +144,7 @@ $scope.popattr={
 
 	$scope.inbox = function() {
 		if ($scope.authenticated)
-			$location.path("/messages");
+			$location.path("/messages/inbox");
 		else {
 			$modal.open($scope.popattr).result.then(function(secret) {
 				AuthService.authenticate($scope.self.email,secret).then(function(allowed){
@@ -130,7 +161,7 @@ $scope.popattr={
 
 	$scope.outbox = function(user) {
 		UserService.setOutboxSelected(user.email);
-		$location.path("/messages");
+		$location.path("/messages/outbox");
 	}
 });
 app.controller('ModalInstanceCtrl', function($scope, $modalInstance,email) {

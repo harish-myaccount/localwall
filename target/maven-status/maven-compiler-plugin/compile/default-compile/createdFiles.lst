@@ -1,10 +1,10 @@
 com\geoc\app\MongoConfig.class
+com\geoc\app\service\MessageService.class
 com\geoc\app\util\CryptoUtil.class
 com\geoc\app\service\MailDispatcher.class
 com\geoc\app\Application.class
 com\geoc\app\WebConfig.class
 com\geoc\app\model\ConnectedUser.class
-com\geoc\app\model\ChatRequest.class
 com\geoc\app\controller\UserController.class
 com\geoc\app\MailConfig.class
 com\geoc\app\service\UserService.class
@@ -12,7 +12,10 @@ com\geoc\app\controller\UserController$1.class
 com\geoc\app\service\GreetingService.class
 com\geoc\app\model\Greeting.class
 com\geoc\app\repository\GreetingRepository.class
+com\geoc\app\repository\impl\MessageRepositoryImpl.class
+com\geoc\app\SecurityConfig.class
 com\geoc\app\model\Message.class
 com\geoc\app\repository\UserRepository.class
-com\geoc\app\model\OutputMessage.class
+com\geoc\app\controller\MessageController.class
 com\geoc\app\controller\GreetingController.class
+com\geoc\app\repository\GCMessageRepository.class

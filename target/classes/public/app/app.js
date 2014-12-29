@@ -5,9 +5,13 @@
 	      when('/', {
 	        templateUrl: 'templates/main.htm',
 	        controller: 'MainController'
-	    }).when('/messages', {
+	    }).when('/messages/inbox', {
 	        templateUrl: 'templates/chat.htm',
-	        controller: 'MessageController'
+	        controller: 'InboxController'
+	    })
+	    .when('/messages/outbox', {
+	        templateUrl: 'templates/chat.htm',
+	        controller: 'OutboxController'
 	    }).
 	      otherwise({
 	        redirectTo: '/'

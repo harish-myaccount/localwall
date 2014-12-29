@@ -1,20 +1,22 @@
 
-<div style="margin-top:7em;">
-<div style="float:left;">
-	<a ng-href="#/">Close</a> <i class="pull-left glyphicon glyphicon-chevron-left"></i>
-	<accordion  close-others="true">
-	 <accordion-group
+
+<div class="container" style="margin-top: 7em;">
+	<a ng-href="#/">Close</a> <i
+		class="pull-left glyphicon glyphicon-chevron-left"></i>
+	<accordion close-others="true"> <accordion-group
 		is-open="isopen" ng-repeat="item in items"
 		ng-controller="ItemController"> <accordion-heading>
 	{{item.desc}} <i class="pull-right glyphicon"
-		ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+		ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-up': !isopen}"></i>
 	</accordion-heading>
-
-	<div ng-repeat="subitem in item.subitems">{{subitem.desc}}</div>
-	</accordion-group> </accordion>
+	<div ng-repeat="message in item.messages | orderBy:'time':true">
+		<p class="printmessage message">
+			<time>{{message.time | date:'HH:mm'}}</time>
+			<span ng-class="{self: message.self}">{{message.text}}</span>
+		</p>
 	</div>
-<div class="container">
-	<form ng-submit="addMessage()" name="messageForm">
+	<hr />
+	<form ng-submit="addMessage(item.owner)" name="messageForm">
 		<input type="text" placeholder="Compose a new message..."
 			ng-model="message" class='message' />
 		<div class="info">
@@ -23,14 +25,10 @@
 			<button ng-disabled="message.length > max || message.length === 0">Send</button>
 		</div>
 	</form>
-	<hr />
-	<p ng-repeat="message in messages | orderBy:'time':true"
-		class="printmessage message">
-		<time>{{message.time | date:'HH:mm'}}</time>
-		<span ng-class="{self: message.self}">{{message.message}}</span>
-	</p>
+
+	</accordion-group> </accordion>
+
 
 </div>
 
-	
-</div>
+

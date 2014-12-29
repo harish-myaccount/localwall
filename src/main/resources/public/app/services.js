@@ -1,5 +1,21 @@
 app = angular.module("chatApp.services", []);
 
+app.service("MessageService",function($q,$http){
+	return {
+		getInbox : function(email) {
+			var deferred = $q.defer();
+			$http.post('/messages/inbox', {
+				email : email,
+			}).success(function(data) {
+				deferred.resolve(data);
+			}).error(function(msg, code) {
+				deferred.reject(msg);
+				console.error(msg, code);
+			});
+			return deferred.promise;
+		}
+	}
+});
 
 app.factory("GeolocationService", function($q, $window, $rootScope) {
 	return function() {
@@ -75,8 +91,12 @@ app.service("UserService", function($q, $http) {
 app.factory("AuthService", function($q,$http) {
 	var isAuthenticated;
 	var isAccepted;
-
+    var useremail;
+	
 	return {
+		getEmail : function(){
+			return useremail;
+		},
 		setAuth : function(result) {
 			isAuthenticated = result
 		},
@@ -84,6 +104,7 @@ app.factory("AuthService", function($q,$http) {
 			return isAuthenticated;
 		},
 		authenticate : function(email,secret) {
+			useremail = email;
 			var deferred = $q.defer();
 			$http.post('/users/authenticate', {
 				email : email,
