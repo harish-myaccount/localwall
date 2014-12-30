@@ -1,22 +1,31 @@
 app = angular.module('chatApp.controllers', []);
 
-app.controller('OutboxController',function($scope,UserService,MessageService){
-	selectedOutboxUser = UserService.getOutboxSelected();
+app.controller('OutboxController',function($scope,UserService,MessageService,AuthService){
+	$scope.selectedOutboxUser = UserService.getOutboxSelected();
+	$scope.items=[];
+	$scope.max=543;
+	MessageService.getTopicsResponded(AuthService.getEmail()).then(function(data){
+		angular.forEach(data,function(value,key){
+			item={desc:value.title,owner:value.owner,messages:value.messages};
+			$scope.items.push(item);
+			if($scope.selectedOutboxUser.email==value.owner)
+				$scope.default=item;
+			});
+		if(!$scope.default){
+			$scope.items[0]={desc:$scope.selectedOutboxUser.tagline,owner:$scope.selectedOutboxUser.email,messages:[]}
+			$scope.default = $scope.items[0];
+		}
+	});
+	
+	
 
-	$scope.items = [
-	                    {
-	                        desc: "Some topic"
-	                    },
-	                    {
-	                        desc: "Some other topic",
-	                        messages: [
-	                                   {
-	                                	  text:"this is sent",
-	                                	  time:"12:00:00"	  
-	                                   }
-	                            ]
-	                    }
-	                ];
+	$scope.send=function(i,toOwner,topic,mess){
+		MessageService.sendMessage(AuthService.getEmail(),toOwner,topic,mess,AuthService.getPic()).then(function(msg){
+			if(!AuthService.getPic())
+				AuthService.setPic(msg.author);
+			$scope.items[i].messages.push(msg);
+		});
+	}
 	
 });
 
@@ -77,6 +86,7 @@ app.controller('MainController', function($scope, $location,
 		$scope.position = position;
 		if (localStorageService.get('email')) {
 			$scope.self.email = localStorageService.get('email');
+			AuthService.setEmail($scope.self.email);
 			$scope.start();
 		}
 	}, function(reason) {
@@ -98,6 +108,8 @@ app.controller('MainController', function($scope, $location,
 		promise.then(function(response) {
 			$scope.users = [];
 			angular.forEach(response, function(user, i) {
+				if(user.content.email==$scope.self.email)
+					AuthService.setPic(user.content.image);
 				$scope.users.push(user)
 			});
 		}, function(error) {
@@ -160,7 +172,7 @@ $scope.popattr={
 	}
 
 	$scope.outbox = function(user) {
-		UserService.setOutboxSelected(user.email);
+		UserService.setOutboxSelected(user);
 		$location.path("/messages/outbox");
 	}
 });

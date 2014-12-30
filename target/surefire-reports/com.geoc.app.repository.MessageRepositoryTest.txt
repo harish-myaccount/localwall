@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: com.geoc.app.repository.MessageRepositoryTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.578 sec - in com.geoc.app.repository.MessageRepositoryTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 8.19 sec <<< FAILURE! - in com.geoc.app.repository.MessageRepositoryTest
+testSuccess(com.geoc.app.repository.MessageRepositoryTest)  Time elapsed: 7.777 sec  <<< ERROR!
+java.lang.IllegalArgumentException: [Assertion failed] - this map must not be empty; it must contain at least one entry
+	at org.springframework.util.Assert.notEmpty(Assert.java:294)
+	at org.springframework.util.Assert.notEmpty(Assert.java:306)
+	at com.geoc.app.repository.MessageRepositoryTest.testSuccess(MessageRepositoryTest.java:26)
+

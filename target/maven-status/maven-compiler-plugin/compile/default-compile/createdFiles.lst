@@ -1,3 +1,4 @@
+com\geoc\app\model\Topic.class
 com\geoc\app\MongoConfig.class
 com\geoc\app\service\MessageService.class
 com\geoc\app\util\CryptoUtil.class
@@ -5,6 +6,7 @@ com\geoc\app\service\MailDispatcher.class
 com\geoc\app\Application.class
 com\geoc\app\WebConfig.class
 com\geoc\app\model\ConnectedUser.class
+com\geoc\app\model\Conversation.class
 com\geoc\app\controller\UserController.class
 com\geoc\app\MailConfig.class
 com\geoc\app\service\UserService.class

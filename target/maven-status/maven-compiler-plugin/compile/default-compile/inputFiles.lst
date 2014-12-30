@@ -1,4 +1,5 @@
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\service\GreetingService.java
+E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\Conversation.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\Greeting.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\service\UserService.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\controller\MessageController.java
@@ -8,6 +9,7 @@ E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\WebConfig.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\Message.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\UserRepository.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\GreetingRepository.java
+E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\Topic.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\ConnectedUser.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\impl\MessageRepositoryImpl.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\service\MessageService.java

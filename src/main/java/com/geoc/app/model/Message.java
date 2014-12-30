@@ -5,12 +5,13 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="g_conversations")
 public class Message {
 
   private String from;
   private String to;
+  private String topic;
   private Date at;
+  private String text;
   public Message(String message, Date at) {
 	  this.setAt(at);
 	  this.message=message;
@@ -60,4 +61,24 @@ public Date getAt() {
 public void setAt(Date at) {
 	this.at = at;
 }
+public String getTopic() {
+	return topic;
+}
+public void setTopic(String topic) {
+	this.topic = topic;
+}
+public String getText() {
+	return text;
+}
+public void setText(String text) {
+	this.text = text;
+}
+public String getPic() {
+	return pic;
+}
+public void setPic(String pic) {
+	this.pic = pic;
+}
+
+private String pic;
 }

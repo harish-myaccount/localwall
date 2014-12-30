@@ -67,10 +67,16 @@ public class UserController {
 			}).start();
 			existing.setCode(code);
 		}
+		if (existing.getImage() == null) {
+			String[] urls = { "http://goo.gl/J7SKmj", "http://goo.gl/SvjslJ" };
+			existing.setImage(CryptoUtil.mash(email)  + ".jpg?d="
+					+ urls[((int) (Math.random() * 10)) % 2]);
+		}
 		existing.setLocation(new Point(user.getCoOrd().get("longitude"), user.getCoOrd().get("latitude")));
 		usrsevice.saveUser(existing);
 		GeoResults<ConnectedUser> grs = usrsevice.getUsersNearBy(existing);
 		for(GeoResult<ConnectedUser> gr : grs){
+			gr.getContent().setCode(null);
 			if(gr.getContent().getEmail().equalsIgnoreCase(emailc))
 				gr.getContent().setEmail(user.getEmail());
 		}

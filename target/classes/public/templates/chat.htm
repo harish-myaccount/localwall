@@ -1,33 +1,38 @@
 
 
-<div class="container" style="margin-top: 7em;">
+<div class="container" style="margin-top: 3em;">
 	<a ng-href="#/">Close</a> <i
 		class="pull-left glyphicon glyphicon-chevron-left"></i>
+			<div style="overflow:auto;height:400px">
+		
 	<accordion close-others="true"> <accordion-group
 		is-open="isopen" ng-repeat="item in items"
 		ng-controller="ItemController"> <accordion-heading>
 	{{item.desc}} <i class="pull-right glyphicon"
 		ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-up': !isopen}"></i>
 	</accordion-heading>
-	<div ng-repeat="message in item.messages | orderBy:'time':true">
-		<p class="printmessage message">
-			<time>{{message.time | date:'HH:mm'}}</time>
-			<span ng-class="{self: message.self}">{{message.text}}</span>
-		</p>
-	</div>
-	<hr />
-	<form ng-submit="addMessage(item.owner)" name="messageForm">
-		<input type="text" placeholder="Compose a new message..."
+	
+	<form ng-submit="send($index,item.owner,item.desc,message)" name="messageForm">
+		<input type="text" ng-focus='isopen' placeholder="Compose a new message..."
 			ng-model="message" class='message' />
 		<div class="info">
 			<span class="count" ng-bind="max - message.length"
 				ng-class="{danger: message.length > max}">140</span>
 			<button ng-disabled="message.length > max || message.length === 0">Send</button>
 		</div>
-	</form>
+	</form>	<hr />
+	
+		<div  ng-repeat="message in item.messages | orderBy:'timestamp':true">
+		<p class="printmessage message">
+			<img style='width:80px;' ng-src="//www.gravatar.com/avatar/{{message.author}}&s=10">
+			<time>{{message.timestamp | date:'HH:mm'}}</time>
+			<span ng-class="{self: message.self}">{{message.text}}</span>
+		</p>
+	</div>
+	
 
 	</accordion-group> </accordion>
-
+</div>
 
 </div>
 

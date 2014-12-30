@@ -53,7 +53,7 @@
 		style="width: 500px; display: table">
 		<h3>{{user.content.tagline}}</h3>
 		<div style="width: 400px">
-			<img class='' ng-src="{{ user.content.image }}"
+			<img class='' ng-src="//www.gravatar.com/avatar/{{ user.content.image }}&s=200"
 				style="width: 200px; padding: 5px; float: left;">
 			<button style="float: right;" ng-if="user.content.email==self.email"
 				ng-click="inbox()">Go to Inbox</button>

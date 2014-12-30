@@ -2,10 +2,39 @@ app = angular.module("chatApp.services", []);
 
 app.service("MessageService",function($q,$http){
 	return {
-		getInbox : function(email) {
+		getTopicsResponded : function(uemail){
+			var deferred = $q.defer();
+			$http.post('/messages/outbox', {
+				email : uemail
+			}).success(function(data) {
+				deferred.resolve(data);
+			}).error(function(msg) {
+				deferred.reject(msg);
+				console.error(msg);
+			});
+			return deferred.promise;
+		},
+		getInbox : function(uemail) {
 			var deferred = $q.defer();
 			$http.post('/messages/inbox', {
-				email : email,
+				email : uemail
+			}).success(function(data) {
+				deferred.resolve(data);
+			}).error(function(msg, code) {
+				deferred.reject(msg);
+				console.error(msg, code);
+			});
+			return deferred.promise;
+		},
+		sendMessage:function(fromEmail,toEmail,utopic,message,uauthor){
+			var deferred = $q.defer();
+			$http.post('/messages/send/message', {
+				from : fromEmail,
+				to : toEmail,
+				topic : utopic,
+				text:message,
+				author:uauthor,
+				at : new Date().getTime()
 			}).success(function(data) {
 				deferred.resolve(data);
 			}).error(function(msg, code) {
@@ -52,7 +81,7 @@ app.service("UserService", function($q, $http) {
 	}
 	
 	this.getOutboxSelected=function(){
-		outboxSelected;
+		return outboxSelected;
 	}
 
 	this.sendLocation = function(position, email) {
@@ -92,8 +121,15 @@ app.factory("AuthService", function($q,$http) {
 	var isAuthenticated;
 	var isAccepted;
     var useremail;
+    var pic;
 	
 	return {
+		getPic : function(){
+		return pic;
+	},
+	setPic : function(picture) {
+		pic = picture;
+	},
 		getEmail : function(){
 			return useremail;
 		},
@@ -118,6 +154,9 @@ app.factory("AuthService", function($q,$http) {
 				console.error(msg, code);
 			});
 			return deferred.promise;
+		},
+		setEmail : function(email){
+			useremail = email;
 		}
 
 	};

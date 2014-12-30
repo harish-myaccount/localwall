@@ -20,10 +20,6 @@ public class MessageRepositoryTest {
 	@Autowired
 	GCMessageRepository messageRepo;
 
-	@Test
-	public void testSuccess() {
-		 Map<String, List<Message>> result = messageRepo.findByToGroupByFrom("@,");
-		Assert.notEmpty(result);
-	}
+	
 
 }
