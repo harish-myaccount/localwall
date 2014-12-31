@@ -7,7 +7,7 @@ import com.geoc.app.model.Conversation;
 import com.geoc.app.model.Message;
 import com.geoc.app.model.Topic;
 
-public interface GCMessageRepository{
+public interface GCTopicRepository{
 	public Map<String, List<Message>> findByToGroupByFrom(String to); 
 	
 	

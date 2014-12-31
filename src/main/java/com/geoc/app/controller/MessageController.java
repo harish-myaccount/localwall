@@ -1,5 +1,6 @@
 package com.geoc.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class MessageController {
 	
 	@RequestMapping(value="/inbox",method = RequestMethod.POST )
 	@ResponseBody
-	public Map<String, List<Message>> getInboxOf(@RequestBody ConnectedUser user){
+	public List<Topic> getInboxOf(@RequestBody ConnectedUser user){
 		return msgService.getInbox(user.getEmail());
 	} 
 	
@@ -42,6 +43,9 @@ public class MessageController {
 	@RequestMapping(value="/outbox",method = RequestMethod.POST )
 	@ResponseBody
 	public List<Topic> getOutboxOf(@RequestBody ConnectedUser user){
+		if(user.getEmail()!=null)
 		return msgService.getOutbox(user.getEmail());
+		
+		return new ArrayList<Topic>();
 	}
 }

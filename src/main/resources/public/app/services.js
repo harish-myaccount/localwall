@@ -33,7 +33,7 @@ app.service("MessageService",function($q,$http){
 				to : toEmail,
 				topic : utopic,
 				text:message,
-				author:uauthor,
+				pic:uauthor,
 				at : new Date().getTime()
 			}).success(function(data) {
 				deferred.resolve(data);

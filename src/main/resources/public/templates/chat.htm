@@ -8,11 +8,11 @@
 	<accordion close-others="true"> <accordion-group
 		is-open="isopen" ng-repeat="item in items"
 		ng-controller="ItemController"> <accordion-heading>
-	{{item.desc}} <i class="pull-right glyphicon"
+	{{item.title}} <i class="pull-right glyphicon"
 		ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-up': !isopen}"></i>
 	</accordion-heading>
 	
-	<form ng-submit="send($index,item.owner,item.desc,message)" name="messageForm">
+	<form ng-submit="send($index,item.owner,item.title,message,item.participants)" name="messageForm">
 		<input type="text" ng-focus='isopen' placeholder="Compose a new message..."
 			ng-model="message" class='message' />
 		<div class="info">
@@ -24,7 +24,7 @@
 	
 		<div  ng-repeat="message in item.messages | orderBy:'timestamp':true">
 		<p class="printmessage message">
-			<img style='width:80px;' ng-src="//www.gravatar.com/avatar/{{message.author}}&s=10">
+			<img style='width:80px;' ng-src="//www.gravatar.com/avatar/{{message.author}}&s=80">
 			<time>{{message.timestamp | date:'HH:mm'}}</time>
 			<span ng-class="{self: message.self}">{{message.text}}</span>
 		</p>

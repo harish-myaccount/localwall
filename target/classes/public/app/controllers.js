@@ -4,21 +4,6 @@ app.controller('OutboxController',function($scope,UserService,MessageService,Aut
 	$scope.selectedOutboxUser = UserService.getOutboxSelected();
 	$scope.items=[];
 	$scope.max=543;
-	MessageService.getTopicsResponded(AuthService.getEmail()).then(function(data){
-		angular.forEach(data,function(value,key){
-			item={desc:value.title,owner:value.owner,messages:value.messages};
-			$scope.items.push(item);
-			if($scope.selectedOutboxUser.email==value.owner)
-				$scope.default=item;
-			});
-		if(!$scope.default){
-			$scope.items[0]={desc:$scope.selectedOutboxUser.tagline,owner:$scope.selectedOutboxUser.email,messages:[]}
-			$scope.default = $scope.items[0];
-		}
-	});
-	
-	
-
 	$scope.send=function(i,toOwner,topic,mess){
 		MessageService.sendMessage(AuthService.getEmail(),toOwner,topic,mess,AuthService.getPic()).then(function(msg){
 			if(!AuthService.getPic())
@@ -26,6 +11,21 @@ app.controller('OutboxController',function($scope,UserService,MessageService,Aut
 			$scope.items[i].messages.push(msg);
 		});
 	}
+	MessageService.getTopicsResponded(AuthService.getEmail()).then(function(data){
+		angular.forEach(data,function(value,key){
+			item={title:value.title,owner:value.owner,messages:value.messages};
+			$scope.items.push(item);
+			if($scope.selectedOutboxUser.email==value.owner)
+				$scope.default=item;
+			});
+		if(!$scope.default){
+			$scope.items[0]={title:$scope.selectedOutboxUser.tagline,owner:$scope.selectedOutboxUser.email,messages:[]}
+			$scope.default = $scope.items[0];
+		}
+	});
+	
+	
+	
 	
 });
 
@@ -37,27 +37,25 @@ app.controller('InboxController',function($scope, $location,AuthService,UserServ
 	}
 	
 
-	$scope.items = [
-	                    {
-	                        desc: "Some topic"
-	                    },
-	                    {
-	                        desc: "Some other topic",
-	                        messages: [
-	                                   {
-	                                	  text:"this is sent",
-	                                	  time:"12:00:00"	  
-	                                   }
-	                            ]
-	                    }
-	                ];
-
-	$scope.default = $scope.items[0];
+	$scope.items = [];
+	$scope.max=543;
+	$scope.send=function(i,toOwner,topic,mess,both){
+		var index = both.indexOf(toOwner);
+		if (index >= 0) {
+		  both.splice( index, 1 );
+		}
+		MessageService.sendMessage(AuthService.getEmail(),both[0],topic,mess,AuthService.getPic()).then(function(msg){
+			if(!AuthService.getPic())
+				AuthService.setPic(msg.author);
+			$scope.items[i].messages.push(msg);
+		});
+	}
 	
 	MessageService.getInbox(AuthService.getEmail()).then(function(data){
 		angular.forEach(data,function(value,key){
-			$scope.items[0].subitems.push({desc:key})
+			$scope.items.push(value);
 		});
+		$scope.default = $scope.items[0];
 	});
 
 });
