@@ -18,7 +18,7 @@
 		<div class="info">
 			<span class="count" ng-bind="max - message.length"
 				ng-class="{danger: message.length > max}">140</span>
-			<button ng-disabled="message.length > max || message.length === 0">Send</button>
+			<button type="submit" ng-disabled="message.length > max || message.length === 0">Send</button>
 		</div>
 	</form>	<hr />
 	
@@ -37,3 +37,12 @@
 </div>
 
 
+<div class="alerts">
+<div ng-repeat="alert in alerts" class="alert alert-{{alert.type}} animation">
+        <button type="button" class="close" ng-click="alert.close()" aria-hidden="true">&times;</button>
+
+<h4>{{ alert.title }}</h4>
+        {{ alert.msg }}
+    
+</div>
+</div>

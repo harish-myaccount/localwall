@@ -1,12 +1,16 @@
 app = angular.module('chatApp.controllers', []);
 
-app.controller('OutboxController',function($scope,UserService,MessageService,AuthService){
+app.controller('OutboxController',function($scope,UserService,MessageService,AuthService,alertService){
 	$scope.selectedOutboxUser = UserService.getOutboxSelected();
 	$scope.items=[];
 	$scope.max=543;
 	$scope.send=function(i,toOwner,topic,mess){
 		MessageService.sendMessage(AuthService.getEmail(),toOwner,topic,mess,AuthService.getPic()).then(function(msg){
-			if(!AuthService.getPic())
+			if(!msg){
+				alertService.add('danger', 'Not Allowed', 'The other user must accept your response to communicate further');
+			  return;
+			}
+				if(!AuthService.getPic())
 				AuthService.setPic(msg.author);
 			$scope.items[i].messages.push(msg);
 		});
