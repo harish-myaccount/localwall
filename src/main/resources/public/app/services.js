@@ -87,7 +87,8 @@ app.service("UserService", function($q, $http) {
 	this.sendLocation = function(position, email) {
 		var deferred = $q.defer();
 		user = {
-			coOrd : position.coords,
+			coOrd:{latitude : position.coords.latitude,
+			       longitude : position.coords.longitude},
 			email : email
 		};
 		$http.post('/users/nearby', user).success(function(data) {

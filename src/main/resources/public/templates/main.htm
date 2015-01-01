@@ -33,11 +33,12 @@
 <p ng-if='users.length>0' class="text-center" style="margin-top: 8em;">Nearby
 	Users</p>
 <p ng-if='users.length==0' class="text-center" style="margin-top: 8em;">
-	You are the first user in this locality. <br />Add a security question
-	according to your interest. <br />For eg: Who is your favourite tennis
-	star? <br />&nbsp;&nbsp;Did you watch interstellar movie? <br />&nbsp;There
-	is buy one get one offer.I need only one.Can we share Bill? <br />If
-	some one of similar interest responds.We will let yout know
+	You are the first user in this locality. <br />Add a topic/question
+	according to your interest. <br />Like:<br/><br/>Can someone lend me 10k.Will repay next month<br />&nbsp;
+	&nbsp;Is anyone having star wars dvd? <br />&nbsp;There
+	is buy one get one offer.I need only one.Can we share Bill? <br />
+	<br />
+	Only nearby users can see your post.You can check responses in your inbox.They cannot send more than one response till you reply to their first message
 </p>
 <div class="alerts">
 <div ng-repeat="alert in alerts" class="alert alert-{{alert.type}} animation">
