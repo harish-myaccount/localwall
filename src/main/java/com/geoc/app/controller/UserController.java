@@ -1,6 +1,5 @@
 package com.geoc.app.controller;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.geoc.app.MailConfig;
 import com.geoc.app.model.ConnectedUser;
 import com.geoc.app.service.MailDispatcher;
 import com.geoc.app.service.UserService;
@@ -58,11 +58,7 @@ public class UserController {
 			new Thread(new Runnable() {
 				
 				public void run() {
-					try {
-						mailService.sendMail( email, "Your secret code is "+ code + ".You can change it here http://"+InetAddress.getLocalHost().getHostName()+":8080/users/changecode?e="+email+"&p="+code);
-					} catch (UnknownHostException e) {
-					
-					}					
+					mailService.sendMail( email, "Your secret code is "+ code + ".You can change it here "+MailConfig.prefixDomain()+"users/changecode?e="+email+"&p="+code);					
 				}
 			}).start();
 			existing.setCode(code);

@@ -20,6 +20,10 @@ public class MailConfig {
 	private String username;
 	@Value("${mail.password}")
 	private String password;
+	
+	@Value("${app.domain}")
+	private static String domain;
+	
 
 	@Bean
 	public JavaMailSender mailSender(){
@@ -41,6 +45,10 @@ public class MailConfig {
 		pre.setFrom(username);
 		pre.setSubject("LocalWall Secret Code");
 		return pre;
+	}
+	
+	public static String prefixDomain(){
+		return "http://"+domain+"/";
 	}
 }
 
