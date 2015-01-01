@@ -32,8 +32,8 @@ public class GCTopicRepositoryImpl implements GCTopicRepository {
 	private Log logger = LogFactory.getLog(this.getClass());
 
 	public List<Topic> getTopicsParticipated(String maskedEmail) {
-		Query query = new Query(Criteria.where("participants").is(maskedEmail));
-		// logger.info(query.getQueryObject().toString());
+		Query query = new Query(Criteria.where("participants").is(maskedEmail).and("owner").ne(maskedEmail));
+		 logger.debug(query.getQueryObject().toString());
 		return mongoTemplate.find(query, Topic.class);
 	}
 
@@ -44,7 +44,7 @@ public class GCTopicRepositoryImpl implements GCTopicRepository {
 		Query query = new Query(Criteria.where("title").is(msg.getTopic())
 				.andOperator(Criteria.where("participants").all(participants)));
 		Topic existing = mongoTemplate.findOne(query, Topic.class);
-		// logger.info(query.getQueryObject().toString());
+		 logger.debug(query.getQueryObject().toString());
 		Conversation toAdd = new Conversation(msg.getText(), msg.getPic(),
 				msg.getAt());
 		if (existing == null) {

@@ -16,12 +16,13 @@ app.controller('OutboxController',function($scope,UserService,MessageService,Aut
 		});
 	}
 	MessageService.getTopicsResponded(AuthService.getEmail()).then(function(data){
-		angular.forEach(data,function(value,key){
+		for(i=0;i<data.length;i++){
+			value=data[i];
 			item={title:value.title,owner:value.owner,messages:value.messages};
 			$scope.items.push(item);
 			if($scope.selectedOutboxUser.email==value.owner)
 				$scope.default=item;
-			});
+			}
 		if(!$scope.default){
 			$scope.items[0]={title:$scope.selectedOutboxUser.tagline,owner:$scope.selectedOutboxUser.email,messages:[]}
 			$scope.default = $scope.items[0];

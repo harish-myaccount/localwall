@@ -21,8 +21,8 @@ public class MailConfig {
 	@Value("${mail.password}")
 	private String password;
 	
-	@Value("${app.domain}")
-	private static String domain;
+	@Value("${mail.domain}")
+	private String domain;
 	
 
 	@Bean
@@ -47,7 +47,7 @@ public class MailConfig {
 		return pre;
 	}
 	
-	public static String prefixDomain(){
+	public String prefixDomain(){
 		return "http://"+domain+"/";
 	}
 }

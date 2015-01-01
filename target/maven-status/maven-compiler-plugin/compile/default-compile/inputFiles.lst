@@ -11,12 +11,13 @@ E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\UserReposito
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\GreetingRepository.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\Topic.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\model\ConnectedUser.java
-E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\impl\MessageRepositoryImpl.java
+E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\TopicRepository.java
+E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\GCTopicRepository.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\service\MessageService.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\controller\UserController.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\service\MailDispatcher.java
+E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\impl\GCTopicRepositoryImpl.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\SecurityConfig.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\Application.java
-E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\repository\GCMessageRepository.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\util\CryptoUtil.java
 E:\Coding\Workspace\localwall\src\main\java\com\geoc\app\controller\GreetingController.java

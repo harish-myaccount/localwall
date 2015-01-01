@@ -1,6 +1,5 @@
 package com.geoc.app.controller;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService usrsevice;
+	
+	@Autowired
+	private MailConfig mailConfig;
 
 	@Autowired
 	public UserController(MailDispatcher automail) {
@@ -58,7 +60,7 @@ public class UserController {
 			new Thread(new Runnable() {
 				
 				public void run() {
-					mailService.sendMail( email, "Your secret code is "+ code + ".You can change it here "+MailConfig.prefixDomain()+"users/changecode?e="+email+"&p="+code);					
+					mailService.sendMail( email, "Your secret code is "+ code + ".You can change it here "+mailConfig.prefixDomain()+"users/changecode?e="+email+"&p="+code);					
 				}
 			}).start();
 			existing.setCode(code);
